@@ -1,0 +1,43 @@
+---
+spring:
+  profiles: db
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/diplom_2022}
+    initialization-mode: never
+    hikari:
+      jdbc-url: ${spring.datasource.url}
+      username: ${POSTGRES_USER:superuser}
+      password: ${POSTGRES_PASSWORD:123456superuser}
+      driver-class-name: org.postgresql.Driver
+      maximum-pool-size: 5
+      minimum-idle: 1
+
+---
+spring:
+  profiles: feign
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 1000
+        readTimeout: 60000
+        loggerLevel: basic
+
+---
+spring:
+  profiles: web
+server:
+  error:
+    include-message: always
+    include-stacktrace: always
+
+---
+spring:
+  profiles: security
+  session:
+    store-type: jdbc

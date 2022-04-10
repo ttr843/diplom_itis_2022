@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mail-integration-service
+  profiles:
+    include: db, feign, web
+  cloud:
+    config:
+      fail-fast: true
+      uri: http://${CONFIG_HOST:127.0.0.1}:${CONFIG_PORT:9101}
+      username: ${CONFIG_USER:user}
+      password: ${CONFIG_PASS:config_pass}
+      retry:
+        max-attempts: 10
+        max-interval: 10000
+        initial-interval: 10000

@@ -1,0 +1,95 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+
+    <changeSet author="Ruslan Pashin" id="20220410-1">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="users" tableName="user"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="users" tableName="user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_id_pk"/>
+            </column>
+            <column name="first_name" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="guid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="VARCHAR(32)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="age" type="SMALLINT"/>
+            <column name="country" type="VARCHAR(32)"/>
+            <column name="city" type="VARCHAR(32)"/>
+            <column name="street" type="VARCHAR(32)"/>
+            <column name="house" type="SMALLINT"/>
+            <column name="email" type="VARCHAR(128)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password_encrypted" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220410-2">
+        <preConditions onFail="MARK_RAN">
+            <not><columnExists schemaName="users" tableName="user" columnName="is_blocked"/></not>
+            <not><columnExists schemaName="users" tableName="user" columnName="role"/></not>
+        </preConditions>
+        <addColumn schemaName="users" tableName="user">
+            <column name="is_blocked" type="BOOLEAN" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220410-3">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="users" tableName="role"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="users" tableName="role">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="role_id_pk"/>
+            </column>
+            <column name="code" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220410-4">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="public" tableName="persistent_logins"/>
+            </not>
+            <not>
+                <tableExists schemaName="public" tableName="SPRING_SESSION"/>
+            </not>
+        </preConditions>
+        <sqlFile path="db/changelog/data/sql/spring_session_tables.sql" splitStatements="true" stripComments="false"/>
+    </changeSet>
+
+
+</databaseChangeLog>

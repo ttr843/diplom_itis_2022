@@ -1,0 +1,24 @@
+logging:
+  file:
+    name: logs/website/config.log
+
+server:
+  port: 9101
+  error:
+    include-message: always
+    include-stacktrace: always
+
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+  profiles:
+    active: native
+  security:
+    user:
+      name: ${CONFIG_USER:user}
+      password: ${CONFIG_PASS:config_pass}

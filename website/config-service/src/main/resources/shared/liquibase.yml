@@ -1,0 +1,11 @@
+logging:
+  file:
+    name: logs/website/liquibase.log
+
+spring:
+  datasource:
+    hikari:
+      maximumPoolSize: 1
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    default-schema: system

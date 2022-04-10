@@ -1,0 +1,22 @@
+logging:
+  file:
+    name: logs/erknm/website.log
+
+server:
+  port: 9102
+
+spring:
+  datasource:
+    hikari:
+      maximum-pool-size: 20
+  jpa:
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+  servlet:
+    multipart:
+      location: /data/tmp
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+mail-integration-service-url: http://${IP_ADDRESS:127.0.0.1}:9103
