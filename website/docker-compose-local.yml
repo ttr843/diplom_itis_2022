@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  zookeeper-website:
+    ports:
+      - 2181:2181
+    networks:
+      - public-website
+
+  kafka-website:
+    ports:
+      - 9092:9092
+      - 19092:19092
+    networks:
+      - public-website
+      -
+  elasticsearch-website:
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - public-website
+
+volumes:
+  elasticsearch-data:
+    driver: local
+
+networks:
+  public-erknm:
