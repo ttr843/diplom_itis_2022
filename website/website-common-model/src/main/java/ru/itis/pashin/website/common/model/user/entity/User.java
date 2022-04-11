@@ -1,16 +1,12 @@
 package ru.itis.pashin.website.common.model.user.entity;
 
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import ru.itis.pashin.website.common.model.user.util.UserGuidGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
-import java.util.Collections;
+import java.io.Serializable;
 import java.util.UUID;
 
 
@@ -22,30 +18,30 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({UserGuidGenerator.class})
 @Table(schema = "users", name = "user")
-public class User implements UserDetails {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "Не должно быть пустым")
     private String firstName;
 
-    @NotEmpty
+    @NotEmpty(message = "Не должно быть пустым")
     private String middleName;
 
-    @NotEmpty
+    @NotEmpty(message = "Не должно быть пустым")
     private String lastName;
 
-    @NotEmpty
+    @NotNull
     private UUID guid;
 
-    @NotEmpty
+    @NotEmpty(message = "Не должно быть пустым")
     private String phoneNumber;
 
-    private Integer age;
+    private Short age;
 
     private String country;
 
@@ -53,15 +49,17 @@ public class User implements UserDetails {
 
     private String street;
 
-    private Integer house;
+    private Short house;
 
-    @NotEmpty
+    @NotEmpty(message = "Не должно быть пустым")
     private String email;
 
-    @NotEmpty
+    @NotNull
     private String passwordEncrypted;
 
     private boolean isBlocked;
+
+    private boolean isConfirmed;
 
     @NotNull
     @ManyToOne
@@ -69,39 +67,4 @@ public class User implements UserDetails {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Role role;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(role.getCode()));
-    }
-
-    @Override
-    public String getPassword() {
-        return this.passwordEncrypted;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return !this.isBlocked;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !this.isBlocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return !this.isBlocked;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return !this.isBlocked;
-    }
 }

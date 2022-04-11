@@ -1,31 +1,31 @@
-package ru.itis.pashin.website.common.model.user.dto;
+package ru.itis.pashin.websiteservice.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
+import javax.validation.constraints.*;
 
 /**
  * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
  */
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+@NoArgsConstructor
+public class SignUpDTO {
 
-    private Long id;
-
+    @NotEmpty
     private String firstName;
 
+    @NotEmpty
     private String middleName;
 
+    @NotEmpty
     private String lastName;
 
-    private UUID guid;
-
+    @NotEmpty
     private String phoneNumber;
 
     private Short age;
@@ -38,13 +38,11 @@ public class UserDTO {
 
     private Short house;
 
+    @Email()
     private String email;
 
-    private RoleDTO role;
+    @NotEmpty
+    @Size(min = 8,max = 16)
+    private String password;
 
-    private boolean isBlocked;
-
-    private boolean isConfirmed;
-
-    private String passwordEncrypted;
 }

@@ -1,0 +1,4 @@
+id;code;name
+1;USER;Пользователь
+2;BANK_EMPLOYEE;Сотрудник банка
+3;ADMIN;Администратор

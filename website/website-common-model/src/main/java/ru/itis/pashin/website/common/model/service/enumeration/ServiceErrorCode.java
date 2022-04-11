@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ServiceErrorCode {
 
-    ERROR_CODE_0000("Пользователь не найден");
+    ERROR_CODE_0000("Пользователь не найден"),
+    ERROR_CODE_0001("Роль не найдена"),
+    ERROR_CODE_0002("Ошибка при создании пользователя"),
+    ERROR_CODE_0003("Ошибка при создании записи о подтверждении УЗ");
 
 
     private final String message;

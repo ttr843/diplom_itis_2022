@@ -47,8 +47,12 @@
 
     <changeSet author="Ruslan Pashin" id="20220410-2">
         <preConditions onFail="MARK_RAN">
-            <not><columnExists schemaName="users" tableName="user" columnName="is_blocked"/></not>
-            <not><columnExists schemaName="users" tableName="user" columnName="role"/></not>
+            <not>
+                <columnExists schemaName="users" tableName="user" columnName="is_blocked"/>
+            </not>
+            <not>
+                <columnExists schemaName="users" tableName="user" columnName="role"/>
+            </not>
         </preConditions>
         <addColumn schemaName="users" tableName="user">
             <column name="is_blocked" type="BOOLEAN" defaultValue="true">
@@ -91,5 +95,88 @@
         <sqlFile path="db/changelog/data/sql/spring_session_tables.sql" splitStatements="true" stripComments="false"/>
     </changeSet>
 
+    <changeSet author="Ruslan Pashin" id="20220410-5">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="users" tableName="confirmation"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="users" tableName="confirmation">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="confirmation_id_pk"/>
+            </column>
+            <column name="confirm_code" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_send" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="send_time" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220410-6">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="users" tableName="user" columnName="is_confirmed"/>
+            </not>
+        </preConditions>
+        <addColumn schemaName="users" tableName="user">
+            <column name="is_confirmed" type="BOOLEAN" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220411-1">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="character varying">select data_type from information_schema.columns
+                where table_schema = 'users'
+                and table_name = 'confirmation'
+                and column_name = 'confirm_code';
+            </sqlCheck>
+        </preConditions>
+        <sql splitStatements="false" stripComments="false">
+            ALTER TABLE users.confirmation ALTER COLUMN confirm_code TYPE UUID using confirm_code::uuid;
+        </sql>
+    </changeSet>
+
+
+    <changeSet author="Ruslan Pashin" id="20220411-2">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from users.role</sqlCheck>
+        </preConditions>
+        <loadData file="db/changelog/data/roles.csv" schemaName="users" separator=";"
+                  quotchar="" tableName="role"/>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220411-3">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="users" tableName="confirmation" columnName="email"/>
+            </not>
+        </preConditions>
+        <addColumn schemaName="users" tableName="confirmation">
+            <column name="email" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220411-4">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="smallint">select data_type from information_schema.columns
+                where table_schema = 'users'
+                and table_name = 'user'
+                and column_name = 'role_id';
+            </sqlCheck>
+        </preConditions>
+        <sql splitStatements="false" stripComments="false">
+            ALTER TABLE users.user ALTER COLUMN role_id TYPE BIGINT;
+        </sql>
+    </changeSet>
 
 </databaseChangeLog>

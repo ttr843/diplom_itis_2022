@@ -1,23 +1,27 @@
 package ru.itis.pashin.website.common.model.user.mapper;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.itis.pashin.website.common.model.user.dto.UserDTO;
+import ru.itis.pashin.website.common.model.user.entity.User;
 
-@Component
-@RequiredArgsConstructor
-public class UserMapper {
+@Mapper(componentModel = "spring")
+public abstract class UserMapper {
 
-  private final RoleMapper roleMapper;
+    @Autowired
+    public RoleMapper roleMapper;
 
-//  public UserDTO entityToUserDTO(User user) {
-//
-//  }
+    @Mapping(target = "role", expression = "java(roleMapper.entityToDTO(user.getRole()))")
+    public abstract UserDTO entityToDTO(User user);
 
-//  public User dtoToEntity(UserDTO user) {
-//    return User.builder()
-//            .id(user.getId())
-//            .username(user.getUsername())
-//            .build();
-//  }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "role", expression = "java(roleMapper.dtoToEntity(userDTO.getRole()))")
+    public abstract User createUser(UserDTO userDTO);
+
+    @Mapping(target = "id", ignore = true)
+    public abstract void updateUser(@MappingTarget User user, UserDTO userDTO);
+
 
 }
