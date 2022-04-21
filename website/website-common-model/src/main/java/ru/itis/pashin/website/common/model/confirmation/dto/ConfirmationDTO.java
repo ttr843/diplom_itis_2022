@@ -5,13 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Data
 @Builder
 @NoArgsConstructor

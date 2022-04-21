@@ -34,7 +34,11 @@
             <artifactId>website-common-service</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>ru.itis.pashin</groupId>
+            <artifactId>website-index-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--spring web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

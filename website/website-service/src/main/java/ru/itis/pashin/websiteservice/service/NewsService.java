@@ -16,9 +16,7 @@ import java.util.stream.StreamSupport;
 import static ru.itis.pashin.website.common.model.exception.enumeration.ServiceErrorCode.ERROR_CODE_0002;
 import static ru.itis.pashin.website.common.model.exception.enumeration.ServiceErrorCode.ERROR_CODE_0007;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Service
 @RequiredArgsConstructor
 @Slf4j

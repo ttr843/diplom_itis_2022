@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.itis.pashin.website.common.model.exception.exception.ServiceException;
-import ru.itis.pashin.website.common.model.loan.dto.LoanApplicationDTO;
 import ru.itis.pashin.website.common.model.user.dto.UserDTO;
+import ru.itis.pashin.website.index.common.index.LoanIndex;
 import ru.itis.pashin.websiteservice.model.dto.CreateLoanApplicationDTO;
 import ru.itis.pashin.websiteservice.service.CatalogsService;
 import ru.itis.pashin.websiteservice.service.LoanService;
@@ -19,9 +19,7 @@ import ru.itis.pashin.websiteservice.service.UserService;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Controller
 @RequestMapping("/website/loan")
 @RequiredArgsConstructor
@@ -36,7 +34,7 @@ public class LoanApplicationController {
     @GetMapping("")
     public String loanPage(Authentication authentication, Model model) {
         UserDTO currentUser = userService.getCurrentUser(authentication);
-        List<LoanApplicationDTO> loanList = loanService.getLoans(currentUser);
+        List<LoanIndex> loanList = loanService.getLoans(currentUser);
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("loans", loanList);
         return "loans";
@@ -52,7 +50,7 @@ public class LoanApplicationController {
     @PostMapping("/create")
     public String createLoan(CreateLoanApplicationDTO createLoanApplicationDTO, Authentication authentication, Model model) {
         try {
-            loanService.createLoan(createLoanApplicationDTO, userService.getCurrentUser(authentication));
+            loanService.saveLoan(createLoanApplicationDTO, userService.getCurrentUser(authentication));
             return "redirect:/website/loan";
         } catch (ServiceException e) {
             model.addAttribute(ERROR_PARAM_TITLE, e.getServiceErrorCode());
@@ -63,7 +61,7 @@ public class LoanApplicationController {
     @PostMapping("/approve/{guid}")
     public String approveLoan(@PathVariable("guid") UUID guid, Authentication authentication, Model model) {
         try {
-            loanService.approveLoan(guid, userService.getCurrentUser(authentication));
+            loanService.approveByGuid(guid, userService.getCurrentUser(authentication));
             return "redirect:/website/loan";
         } catch (ServiceException e) {
             model.addAttribute(ERROR_PARAM_TITLE, e.getServiceErrorCode());

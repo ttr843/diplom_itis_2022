@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Data
 @Entity
 @Builder

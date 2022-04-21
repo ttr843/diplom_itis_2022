@@ -7,9 +7,7 @@ import org.mapstruct.MappingTarget;
 import ru.itis.pashin.website.common.model.confirmation.dto.ConfirmationDTO;
 import ru.itis.pashin.website.common.model.confirmation.entity.Confirmation;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ConfirmationMapper {
 

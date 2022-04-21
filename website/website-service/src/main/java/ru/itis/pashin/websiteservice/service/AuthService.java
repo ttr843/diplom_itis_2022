@@ -11,9 +11,7 @@ import ru.itis.pashin.websiteservice.model.mapper.SignUpMapper;
 
 import static ru.itis.pashin.website.common.model.exception.enumeration.ServiceErrorCode.ERROR_CODE_0002;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Service
 @RequiredArgsConstructor
 @Slf4j

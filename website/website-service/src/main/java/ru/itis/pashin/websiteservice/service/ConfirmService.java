@@ -16,9 +16,7 @@ import java.util.UUID;
 
 import static ru.itis.pashin.website.common.model.exception.enumeration.ServiceErrorCode.ERROR_CODE_0003;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Service
 @RequiredArgsConstructor
 @Slf4j

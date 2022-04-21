@@ -4,9 +4,7 @@ import lombok.*;
 
 import java.util.UUID;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

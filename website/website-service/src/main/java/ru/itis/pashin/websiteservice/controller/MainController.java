@@ -10,9 +10,6 @@ import ru.itis.pashin.websiteservice.service.NewsService;
 import ru.itis.pashin.websiteservice.service.UserService;
 
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
 @Controller
 @RequestMapping(("/website"))
 @RequiredArgsConstructor

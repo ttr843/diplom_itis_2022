@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "companyName": {
+      "type": "keyword",
+      "normalizer": "lowercase_keyword"
+    }
+  }
+}

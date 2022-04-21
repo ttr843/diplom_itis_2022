@@ -5,7 +5,9 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import ru.itis.pashin.websiteservice.client.IndexReadClient;
 
 @SpringBootApplication(
         scanBasePackages = {
@@ -16,6 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 )
 @EntityScan(basePackages = "ru.itis.pashin.website.common.model")
 @EnableJpaRepositories(basePackages = {"ru.itis.pashin.website.common.service.repository"})
+@EnableFeignClients(clients = {IndexReadClient.class})
 public class WebsiteApp {
 
     public static void main(String[] args) {

@@ -23,6 +23,7 @@ services:
       KAFKA_CREATE_TOPICS_SEPARATOR: "$$'\n'"
       KAFKA_CREATE_TOPICS: |
         loan.request.topic:1:1
+        loan.index.write.topic:1:1
         loan.response.topic:1:1
       KAFKA_ZOOKEEPER_CONNECT: "${KAFKA_ZOOKEEPER_CONNECT}"
       HOSTNAME_COMMAND: "echo '${IP_ADDRESS}'"
@@ -43,3 +44,96 @@ services:
       nofile:
         soft: 65536
         hard: 65536
+
+  config-service:
+    build: config-service
+    restart: unless-stopped
+    container_name: config-service
+    environment:
+      CONFIG_URL: "${CONFIG_URL}"
+      CONFIG_SERVICE_PASS: "${CONFIG_SERVICE_PASS}"
+      CONFIG_SERVICE_USER: "${CONFIG_SERVICE_USER}"
+      DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"
+
+  website-service:
+    build: website-service
+    restart: unless-stopped
+    container_name: website-service
+    depends_on:
+      - config-service
+    environment:
+      CONFIG_URL: "${CONFIG_URL}"
+      CONFIG_SERVICE_PASS: "${CONFIG_SERVICE_PASS}"
+      CONFIG_SERVICE_USER: "${CONFIG_SERVICE_USER}"
+      DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"
+
+  website-ml-service:
+    build: website-ml-service
+    restart: unless-stopped
+    container_name: website-ml-service
+    depends_on:
+      - config-service
+    environment:
+      CONFIG_URL: "${CONFIG_URL}"
+      CONFIG_SERVICE_PASS: "${CONFIG_SERVICE_PASS}"
+      CONFIG_SERVICE_USER: "${CONFIG_SERVICE_USER}"
+      DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"
+
+  mail-integration-service:
+    build: mail-integration-service
+    restart: unless-stopped
+    container_name: mail-integration-service
+    depends_on:
+      - config-service
+    environment:
+      CONFIG_URL: "${CONFIG_URL}"
+      CONFIG_SERVICE_PASS: "${CONFIG_SERVICE_PASS}"
+      CONFIG_SERVICE_USER: "${CONFIG_SERVICE_USER}"
+      DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"
+
+  liquibase-service:
+    build: liquibase-service
+    container_name: liquibase-service
+    depends_on:
+      - config-service
+    environment:
+      CONFIG_URL: "${CONFIG_URL}"
+      CONFIG_SERVICE_PASS: "${CONFIG_SERVICE_PASS}"
+      CONFIG_SERVICE_USER: "${CONFIG_SERVICE_USER}"
+      DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"
+
+  index-write-service:
+    build: index-write-service
+    restart: unless-stopped
+    container_name: index-write-service
+    depends_on:
+      - config-service
+    environment:
+      CONFIG_URL: "${CONFIG_URL}"
+      CONFIG_SERVICE_PASS: "${CONFIG_SERVICE_PASS}"
+      CONFIG_SERVICE_USER: "${CONFIG_SERVICE_USER}"
+      DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"
+
+  index-sync-service:
+    build: index-sync-service
+    restart: unless-stopped
+    container_name: index-sync-service
+    depends_on:
+      - config-service
+    environment:
+      CONFIG_URL: "${CONFIG_URL}"
+      CONFIG_SERVICE_PASS: "${CONFIG_SERVICE_PASS}"
+      CONFIG_SERVICE_USER: "${CONFIG_SERVICE_USER}"
+      DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"
+
+  index-read-service:
+    build: index-read-service
+    restart: unless-stopped
+    container_name: index-read-service
+    depends_on:
+      - config-service
+    environment:
+      CONFIG_URL: "${CONFIG_URL}"
+      CONFIG_SERVICE_PASS: "${CONFIG_SERVICE_PASS}"
+      CONFIG_SERVICE_USER: "${CONFIG_SERVICE_USER}"
+      DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"

@@ -10,9 +10,7 @@ import ru.itis.pashin.website.common.model.loan.dto.LoanApplicationDTO;
 import ru.itis.pashin.website.common.model.loan.entity.LoanApplication;
 import ru.itis.pashin.website.common.model.user.mapper.UserMapper;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Mapper(componentModel = "spring")
 public abstract class LoanApplicationMapper {
 

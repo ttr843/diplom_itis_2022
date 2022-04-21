@@ -21,6 +21,41 @@ services:
       - 9300:9300
     networks:
       - public-website
+  config-service:
+    ports:
+      - 9101:9101
+    networks:
+      - public-website
+  website-service:
+    ports:
+      - 9102:9102
+    networks:
+      - public-website
+  website-ml-service:
+    ports:
+      - 9104:9104
+    networks:
+      - public-website
+  mail-integration-service:
+    ports:
+      - 9103:9103
+    networks:
+      - public-website
+  index-write-service:
+    ports:
+      - 9106:9106
+    networks:
+      - public-website
+  index-sync-service:
+    ports:
+      - 9107:9107
+    networks:
+      - public-website
+  index-read-service:
+    ports:
+      - 9105:9105
+    networks:
+      - public-website
 
 volumes:
   elasticsearch-data:

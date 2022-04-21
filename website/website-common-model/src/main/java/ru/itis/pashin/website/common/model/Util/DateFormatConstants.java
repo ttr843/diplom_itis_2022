@@ -5,9 +5,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.format.DateTimeFormatter;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DateFormatConstants {
 

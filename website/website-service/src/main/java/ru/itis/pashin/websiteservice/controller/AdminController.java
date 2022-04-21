@@ -12,9 +12,7 @@ import ru.itis.pashin.website.common.model.system.dto.NewsDTO;
 import ru.itis.pashin.websiteservice.model.dto.CreateBankerDTO;
 import ru.itis.pashin.websiteservice.service.*;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Controller
 @RequestMapping("/website/admin")
 @RequiredArgsConstructor

@@ -62,7 +62,7 @@
     </div>
     <p></p>
     <div>
-    <input type="number" placeholder="Уставный капитал, RUB" name="capital">
+        <input type="number" placeholder="Уставный капитал, RUB" name="capital">
     </div>
     <p></p>
     <div>

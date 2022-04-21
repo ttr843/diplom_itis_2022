@@ -9,9 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Data
 @Entity
 @Builder

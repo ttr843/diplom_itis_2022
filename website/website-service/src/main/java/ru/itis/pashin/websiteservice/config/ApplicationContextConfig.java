@@ -11,9 +11,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import javax.sql.DataSource;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Configuration
 @RequiredArgsConstructor
 @ComponentScan(basePackages = "ru.itis.pashin.websiteservice")

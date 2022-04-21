@@ -1,0 +1,9 @@
+logging:
+  file:
+    name: logs/index-read.log
+
+server:
+  port: 9105
+
+index:
+  elasticHost: ${ELASTIC_HOST:localhost:9200}

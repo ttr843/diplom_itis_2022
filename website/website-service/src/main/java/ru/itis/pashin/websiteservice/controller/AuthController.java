@@ -13,9 +13,7 @@ import ru.itis.pashin.websiteservice.service.AuthService;
 
 import java.util.Objects;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Controller
 @RequestMapping("/website/auth")
 @RequiredArgsConstructor

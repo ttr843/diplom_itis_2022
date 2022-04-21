@@ -7,9 +7,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.util.UUID;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Component
 public class UserGuidGenerator {
 

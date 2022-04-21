@@ -20,5 +20,8 @@ spring:
       max-request-size: 50MB
   kafka:
     client-id: website-service
+    consumer:
+      group-id: website-ml-response-consumer-group
 
 mail-integration-service-url: http://${IP_ADDRESS:127.0.0.1}:9103
+index-read-service-url: http://${IP_ADDRESS:127.0.0.1}:9105

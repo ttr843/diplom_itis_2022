@@ -6,17 +6,10 @@ import ru.itis.pashin.website.common.model.catalogs.dto.CompanySizeTypeDTO;
 import ru.itis.pashin.website.common.model.catalogs.dto.IndustryDTO;
 import ru.itis.pashin.website.common.model.loan.enumeration.MlStatus;
 import ru.itis.pashin.website.common.model.user.dto.UserDTO;
-import ru.itis.pashin.website.common.model.user.entity.User;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

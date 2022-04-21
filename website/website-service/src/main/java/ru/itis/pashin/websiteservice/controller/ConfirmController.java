@@ -10,9 +10,7 @@ import ru.itis.pashin.websiteservice.service.ConfirmService;
 
 import java.util.UUID;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Controller
 @RequestMapping("/website/confirm")
 @RequiredArgsConstructor

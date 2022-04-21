@@ -3,9 +3,7 @@ package ru.itis.pashin.websiteservice.model.dto;
 import lombok.*;
 import ru.itis.pashin.website.common.model.annotation.FieldDescription;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

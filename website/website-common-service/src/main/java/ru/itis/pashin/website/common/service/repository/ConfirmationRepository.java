@@ -7,9 +7,7 @@ import ru.itis.pashin.website.common.model.confirmation.entity.Confirmation;
 
 import java.util.Optional;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Repository
 public interface ConfirmationRepository extends JpaRepository<Confirmation, Long>, JpaSpecificationExecutor<Confirmation> {
 

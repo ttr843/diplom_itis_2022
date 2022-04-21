@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.itis.pashin.website.common.model.exception.enumeration.ServiceErrorCode;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 @Getter
 @Setter

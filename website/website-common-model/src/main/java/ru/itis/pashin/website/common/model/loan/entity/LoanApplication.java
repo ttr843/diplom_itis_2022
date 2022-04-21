@@ -14,9 +14,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Data
 @Entity
 @Builder
@@ -93,7 +91,6 @@ public class LoanApplication implements Serializable {
     @FieldDescription(description = "Время, когда была одобрена заявка")
     private LocalDateTime approvedByBankAt;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "banker_id")
     @ToString.Exclude

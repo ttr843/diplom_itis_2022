@@ -10,12 +10,8 @@ import org.springframework.stereotype.Service;
 import ru.itis.pashin.website.common.model.confirmation.dto.ConfirmationDTO;
 
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Service
 @RequiredArgsConstructor
 @Slf4j

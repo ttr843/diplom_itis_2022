@@ -16,9 +16,7 @@ import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Service
 @ConditionalOnExpression("${sender.integration.receive-polling-interval:1000} > 0")
 @Slf4j
@@ -46,7 +44,7 @@ public class ReceiveConfirmationService {
             mailSenderService.sendConfirmMessage(confirmationDTO);
             confirmationDTO.setSend(true);
             confirmationDTO.setSendTime(LocalDateTime.now(ZoneOffset.UTC));
-            confirmationMapper.update(confirmation,confirmationDTO);
+            confirmationMapper.update(confirmation, confirmationDTO);
             confirmationRepository.save(confirmation);
         } catch (Exception e) {
             log.error("Ошибка при отправке сообщения для потверждения учетной записи, уникальный код : {}, ошибка : {}",

@@ -13,9 +13,7 @@ import ru.itis.pashin.website.common.model.loan.enumeration.MlStatus;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Repository
 public interface LoanApplicationRepository extends JpaRepository<LoanApplication, Long>, JpaSpecificationExecutor<LoanApplication> {
 
@@ -29,4 +27,8 @@ public interface LoanApplicationRepository extends JpaRepository<LoanApplication
     @Transactional
     @Query("UPDATE LoanApplication loan SET loan.mlStatus = :status WHERE loan.id = :id")
     void setStatus(@Param("id") long id, @Param("status") MlStatus status);
+
+    @Query(nativeQuery = true, value =
+            "SELECT COUNT(*) FROM loan.loan_application")
+    Long countLoanApplication();
 }

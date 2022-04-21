@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import ru.itis.pashin.mlservice.messages.producer.MLResponseProducer;
 import ru.itis.pashin.mlservice.messages.util.KafkaTopicConstant;
 import ru.itis.pashin.mlservice.service.LoanMlPredictService;
 import ru.itis.pashin.website.common.model.loan.dto.LoanApplicationDTO;
@@ -17,9 +18,7 @@ import java.util.Objects;
 import static ru.itis.pashin.mlservice.messages.config.KafkaConfiguration.LOAN_REQUEST_GROUP;
 import static ru.itis.pashin.mlservice.messages.config.KafkaConfiguration.MAX_POLL_INTERVAL_MS;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -27,6 +26,8 @@ public class LoanRequestTopicListener {
 
     private final LoanApplicationRepository loanApplicationRepository;
     private final LoanMlPredictService loanMlPredictService;
+    private final MLResponseProducer mlResponseProducer;
+    private final LoanApplicationMapper loanApplicationMapper;
 
     @KafkaListener(topics = KafkaTopicConstant.LOAN_REQUEST_TOPIC, groupId = LOAN_REQUEST_GROUP, properties = {
             MAX_POLL_INTERVAL_MS
@@ -39,20 +40,33 @@ public class LoanRequestTopicListener {
         log.debug("начинаю обрабатывать заявку");
         Long loanId = loanApplicationDTO.getId();
         log.info("listen() - start. loanId: {}", loanId);
+        LoanApplicationDTO updatedLoanApplicationDTO = null;
+        try {
+            updatedLoanApplicationDTO = processLoan(loanId);
+            log.info("listenLoanRequestTopic() - end.  loanId: {}", loanId);
+        } catch (Exception e) {
+            handleError(loanId);
+            log.error("listenLoanRequestTopic() - error. loanId: " + loanId + "\n" + e.getMessage(), e);
+        }
+        mlResponseProducer.sendLoan(updatedLoanApplicationDTO, KafkaTopicConstant.LOAN_RESPONSE_TOPIC);
+    }
+
+    private void handleError(Long loanId) {
+        loanApplicationRepository.setStatus(loanId, MlStatus.ERROR);
+    }
+
+    private LoanApplicationDTO processLoan(Long loanId) {
         LoanApplication loanApplication = loanApplicationRepository.findById(loanId).orElse(null);
         if (Objects.isNull(loanApplication)) {
-            log.warn("listenExportsTopic() - end. Заявка не обработано, скорее всего она была уже удалены. loanId: {}", loanId);
-            return;
+            log.warn("listenLoanRequestTopic() - end. Заявка не обработана, скорее всего она была уже удалены. loanId: {}", loanId);
+            return null;
         }
-        try {
-            loanApplicationRepository.setStatus(loanId, MlStatus.IN_PROGRESS);
-            LoanApplication updatedLoanApplication = loanMlPredictService.predict(loanApplication);
-            loanApplicationRepository.save(updatedLoanApplication);
-            log.info("listenExportsTopic() - end.  loanId: {}, status: {}", loanId, updatedLoanApplication.getMlStatus().name());
-        } catch (Exception e) {
-            loanApplicationRepository.setStatus(loanId, MlStatus.ERROR);
-            log.error("listenExportsTopic() - error. loanId: " + loanApplication + "\n" + e.getMessage(), e);
-        }
+        loanApplicationRepository.setStatus(loanId, MlStatus.IN_PROGRESS);
+        LoanApplicationDTO updatedLoanApplicationDTO = loanMlPredictService.predict(loanApplicationMapper.entityToDTO(loanApplication));
+        loanApplicationMapper.updateLoan(loanApplication, updatedLoanApplicationDTO);
+        loanApplicationRepository.save(loanApplication);
+        log.info("processLoan() - end.  loanId: {}, status: {}", loanId, updatedLoanApplicationDTO.getMlStatus().name());
+        return updatedLoanApplicationDTO;
     }
 
 }

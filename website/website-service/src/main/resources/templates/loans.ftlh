@@ -61,13 +61,13 @@
                     </tr>
                     <#list loans as loan>
                         <tr>
-                            <#assign mlStatusId = loan.getMlStatus().getId()>
+                            <#assign mlStatusId = loan.getMlStatusId()>
                             <td>${loan.getId()}</td>
                             <td>${loan.getCompanyName()}</td>
                             <td>${loan.getCompanyInn()}</td>
                             <td>${loan.getCompanyOgrn()}</td>
-                            <td>${loan.getCompanySizeType().getName()}</td>
-                            <td>${loan.getIndustry().getName()}</td>
+                            <td>${loan.getCompanySizeTypeName()}</td>
+                            <td>${loan.getIndustryName()}</td>
                             <td>${loan.getCreditLimit()}</td>
                             <td>${loan.getAmountOfLawsuits()}</td>
                             <td>${loan.getAmountOfProceedings()}</td>
@@ -77,17 +77,17 @@
                             <td>${loan.getNetProfit()}</td>
                             <td>${loan.getCreatedAt()}</td>
                             <#if mlStatusId == 1>
-                                <td style="color:black">${loan.getMlStatus().getName()}</td>
+                                <td style="color:black">${loan.getMlStatusName()}</td>
                             <#elseif mlStatusId == 2>
-                                <td style="color:blue">${loan.getMlStatus().getName()}
+                                <td style="color:blue">${loan.getMlStatusName()}
                             <#elseif mlStatusId == 3>
-                                <td style="color:red">${loan.getMlStatus().getName()}</td>
+                                <td style="color:red">${loan.getMlStatusName()}</td>
                             <#elseif mlStatusId == 4>
-                                <td style="color:orange">${loan.getMlStatus().getName()}</td>
+                                <td style="color:orange">${loan.getMlStatusName()}</td>
                             <#elseif mlStatusId == 5>
-                                <td style="color:green">${loan.getMlStatus().getName()}</td>
+                                <td style="color:green">${loan.getMlStatusName()}</td>
                             </#if>
-                            <#assign approvedStatus = loan.isApprovedByBank()>
+                            <#assign approvedStatus = loan.getApprovedByBank()>
                             <#if approvedStatus>
                                 <td style="color:green">Да</td>
                             <#else>
@@ -95,9 +95,9 @@
                             </#if>
                             <#if loan.getApprovedByBankAt()??>
                                 <td>${loan.getApprovedByBankAt()}</td>
-                                <td>${loan.getBanker().getFirstName() + " "} ${loan.getBanker().getMiddleName() + " "} ${loan.getBanker().getLastName() + " "} </td>
-                                <td>${loan.getBanker().getPosition()}</td>
-                                <td>${loan.getBanker().getBank().getName()}</td>
+                                <td>${loan.getBankerFullName()}</td>
+                                <td>${loan.getBankerPosition()}</td>
+                                <td>${loan.getBankName()}</td>
                             <#else>
                                 <td></td>
                                 <td></td>
@@ -138,13 +138,13 @@
                     </tr>
                     <#list loans as loan>
                         <tr>
-                            <#assign mlStatusId = loan.getMlStatus().getId()>
+                            <#assign mlStatusId = loan.getMlStatusId()>
                             <td>${loan.getId()}</td>
                             <td>${loan.getCompanyName()}</td>
                             <td>${loan.getCompanyInn()}</td>
                             <td>${loan.getCompanyOgrn()}</td>
-                            <td>${loan.getCompanySizeType().getName()}</td>
-                            <td>${loan.getIndustry().getName()}</td>
+                            <td>${loan.getCompanySizeTypeName()}</td>
+                            <td>${loan.getIndustryName()}</td>
                             <td>${loan.getCreditLimit()}</td>
                             <td>${loan.getAmountOfLawsuits()}</td>
                             <td>${loan.getAmountOfProceedings()}</td>
@@ -154,18 +154,18 @@
                             <td>${loan.getNetProfit()}</td>
                             <td>${loan.getCreatedAt()}</td>
                             <#if mlStatusId == 1>
-                                <td style="color:black">${loan.getMlStatus().getName()}</td>
+                                <td style="color:black">${loan.getMlStatusName()}</td>
                             <#elseif mlStatusId == 2>
-                                <td style="color:blue">${loan.getMlStatus().getName()}
+                                <td style="color:blue">${loan.getMlStatusName()}
                             <#elseif mlStatusId == 3>
-                                <td style="color:red">${loan.getMlStatus().getName()}</td>
+                                <td style="color:red">${loan.getMlStatusName()}</td>
                             <#elseif mlStatusId == 4>
-                                <td style="color:orange">${loan.getMlStatus().getName()}</td>
+                                <td style="color:orange">${loan.getMlStatusName()}</td>
                             <#elseif mlStatusId == 5>
-                                <td style="color:green">${loan.getMlStatus().getName()}</td>
+                                <td style="color:green">${loan.getMlStatusName()}</td>
                             </#if>
-                            <td>${loan.getClient().getFirstName() + " "} ${loan.getClient().getMiddleName() + " "} ${loan.getClient().getLastName()}</td>
-                            <#assign approvedStatus = loan.isApprovedByBank()>
+                            <td>${loan.getCreatedByFullName()}</td>
+                            <#assign approvedStatus = loan.getApprovedByBank()>
                             <#if approvedStatus>
                                 <td style="color:green">Да</td>
                             <#else>
@@ -173,9 +173,9 @@
                             </#if>
                             <#if loan.getApprovedByBankAt()??>
                                 <td>${loan.getApprovedByBankAt()}</td>
-                                <td>${loan.getBanker().getFirstName() + " "} ${loan.getBanker().getMiddleName() + " "} ${loan.getBanker().getLastName() + " "} </td>
-                                <td>${loan.getBanker().getPosition()}</td>
-                                <td>${loan.getBanker().getBank().getName()}</td>
+                                <td>${loan.getBankerFullName()}</td>
+                                <td>${loan.getBankerPosition()}</td>
+                                <td>${loan.getBankName()}</td>
                             <#else>
                                 <td></td>
                                 <td></td>
@@ -186,7 +186,8 @@
                                 <td><b>Нет действий</b></td>
                             <#else>
                                 <td>
-                                    <form action="/website/loan/approve/${loan.getGuid()}" method="post" id="approve"></form>
+                                    <form action="/website/loan/approve/${loan.getGuid()}" method="post"
+                                          id="approve"></form>
                                     <a onclick="document.getElementById('approve').submit();">
                                         <button type="button">
                                             <b>Согласовать</b>

@@ -1,0 +1,26 @@
+logging:
+  file:
+    name: logs/index-sync.log
+
+server:
+  port: 9107
+
+spring:
+  datasource:
+    hikari:
+      maximum-pool-size: 20
+  jpa:
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+
+index:
+  elasticHost: ${ELASTIC_HOST:localhost:9200}
+
+reindex:
+  threadPoolSize: 4
+  rebuildPageSize: 5000
+  reindexLoan: true
+  rebuildLoan: true
+  loanSavedBefore: 0
+  loanStartingPage: 0

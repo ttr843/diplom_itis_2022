@@ -2,11 +2,7 @@ package ru.itis.pashin.website.common.model.system.dto;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

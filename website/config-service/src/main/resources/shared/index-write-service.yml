@@ -1,0 +1,15 @@
+logging:
+  file:
+    name: logs/index-write.log
+
+server:
+  port: 9106
+
+spring:
+  kafka:
+    client-id: website-index-write
+    consumer:
+      group-id: website-index-write-consumer-group
+
+index:
+  elasticHost: ${ELASTIC_HOST:localhost:9200}

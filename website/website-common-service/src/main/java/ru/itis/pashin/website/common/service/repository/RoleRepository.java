@@ -7,9 +7,7 @@ import ru.itis.pashin.website.common.model.user.entity.Role;
 
 import java.util.Optional;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Role> {
 

@@ -5,9 +5,7 @@ import org.mapstruct.Mapping;
 import ru.itis.pashin.website.common.model.system.dto.NewsDTO;
 import ru.itis.pashin.website.common.model.system.entity.News;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Mapper(componentModel = "spring")
 public interface NewsMapper {
 

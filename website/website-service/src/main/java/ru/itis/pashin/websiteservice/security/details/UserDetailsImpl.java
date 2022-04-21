@@ -8,9 +8,7 @@ import ru.itis.pashin.website.common.model.user.entity.User;
 import java.util.Collection;
 import java.util.Collections;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;

@@ -3,9 +3,7 @@ package ru.itis.pashin.mlservice.messages.util;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class KafkaTopicConstant {
 

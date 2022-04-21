@@ -3,9 +3,7 @@ package ru.itis.pashin.website.common.model.exception.enumeration;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @RequiredArgsConstructor
 @Getter
 public enum ServiceErrorCode {

@@ -11,9 +11,7 @@ import ru.itis.pashin.website.common.model.user.entity.User;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
- */
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
