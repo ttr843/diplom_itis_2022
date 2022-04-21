@@ -1,7 +1,6 @@
 package ru.itis.pashin.websiteservice.security.details;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,7 +10,7 @@ import ru.itis.pashin.website.common.service.repository.UserRepository;
 
 import java.util.Optional;
 
-import static ru.itis.pashin.website.common.model.service.enumeration.ServiceErrorCode.ERROR_CODE_0000;
+import static ru.itis.pashin.website.common.model.exception.enumeration.ServiceErrorCode.ERROR_CODE_0000;
 
 @Service(value = "SiteUserDerailsService")
 @RequiredArgsConstructor

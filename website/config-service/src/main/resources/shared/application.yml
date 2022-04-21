@@ -1,7 +1,10 @@
 ---
 spring:
-  profiles: db
+  config:
+    activate:
+      on-profile: db
   jpa:
+    open-in-view: true
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
       ddl-auto: validate
@@ -19,7 +22,9 @@ spring:
 
 ---
 spring:
-  profiles: feign
+  config:
+    activate:
+      on-profile: feign
 feign:
   client:
     config:
@@ -30,7 +35,9 @@ feign:
 
 ---
 spring:
-  profiles: web
+  config:
+    activate:
+      on-profile: web
 server:
   error:
     include-message: always
@@ -38,6 +45,36 @@ server:
 
 ---
 spring:
-  profiles: security
+  config:
+    activate:
+      on-profile: security
   session:
     store-type: jdbc
+
+---
+spring:
+  config:
+    activate:
+      on-profile: kafka
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER_URL_EXT:localhost:19092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 0x7fffffff # Integer.MAX_VALUE
+      compressionType: snappy
+      batchSize: 32768
+      properties:
+        linger.ms: 20
+        max.request.size: 104857600
+        buffer.memory: 104857600
+    consumer:
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      auto-offset-reset: earliest
+      properties:
+        max.partition.fetch.bytes: 104857600
+        spring.json.trusted.packages: "*"
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer

@@ -34,7 +34,7 @@ public class ReceiveConfirmationService {
     public void checkReceive() {
         log.debug("get new confirmations");
         StreamSupport.stream(
-                confirmationRepository.findAllByIsSendOrderByCreatedAsc(false).spliterator(), false)
+                confirmationRepository.findAllBySendOrderByCreatedAsc(false).spliterator(), false)
                 .collect(Collectors.toList())
                 .forEach(this::handleConfirmation);
     }

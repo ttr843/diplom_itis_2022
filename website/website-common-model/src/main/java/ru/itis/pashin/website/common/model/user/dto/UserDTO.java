@@ -1,19 +1,23 @@
 package ru.itis.pashin.website.common.model.user.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import ru.itis.pashin.website.common.model.catalogs.dto.BankDTO;
+import ru.itis.pashin.website.common.model.catalogs.entity.Bank;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 /**
  * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
  */
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 public class UserDTO {
 
     private Long id;
@@ -47,4 +51,8 @@ public class UserDTO {
     private boolean isConfirmed;
 
     private String passwordEncrypted;
+
+    private BankDTO bank;
+
+    private String position;
 }

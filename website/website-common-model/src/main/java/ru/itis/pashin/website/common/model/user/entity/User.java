@@ -1,6 +1,7 @@
 package ru.itis.pashin.website.common.model.user.entity;
 
 import lombok.*;
+import ru.itis.pashin.website.common.model.catalogs.entity.Bank;
 import ru.itis.pashin.website.common.model.user.util.UserGuidGenerator;
 
 import javax.persistence.*;
@@ -60,6 +61,14 @@ public class User implements Serializable {
     private boolean isBlocked;
 
     private boolean isConfirmed;
+
+    @ManyToOne
+    @JoinColumn(name = "bank_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Bank bank;
+
+    private String position;
 
     @NotNull
     @ManyToOne

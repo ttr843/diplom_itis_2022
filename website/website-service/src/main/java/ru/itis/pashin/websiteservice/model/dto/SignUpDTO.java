@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
@@ -42,7 +44,7 @@ public class SignUpDTO {
     private String email;
 
     @NotEmpty
-    @Size(min = 8,max = 16)
+    @Size(min = 8, max = 16)
     private String password;
 
 }

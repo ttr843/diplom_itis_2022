@@ -25,6 +25,6 @@ public class ConfirmController {
                           Model model) {
         boolean isConfirmed = confirmService.confirm(guid);
         model.addAttribute("isConfirmed", isConfirmed);
-        return "confirmPage";
+        return "confirm_page";
     }
 }

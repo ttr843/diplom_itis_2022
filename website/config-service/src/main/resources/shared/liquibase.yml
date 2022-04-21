@@ -1,6 +1,6 @@
 logging:
   file:
-    name: logs/website/liquibase.log
+    name: logs/liquibase.log
 
 spring:
   datasource:

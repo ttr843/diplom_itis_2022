@@ -16,7 +16,7 @@ public class WelcomePageController {
 
     @GetMapping()
     public String welcomePage() {
-        return "welcomePage";
+        return "welcome_page";
     }
 
 }

@@ -15,5 +15,5 @@ public interface ConfirmationRepository extends JpaRepository<Confirmation, Long
 
     Optional<Confirmation> findConfirmationByConfirmCode(String confirmCode);
 
-    Iterable<Confirmation> findAllByIsSendOrderByCreatedAsc(boolean isSend);
+    Iterable<Confirmation> findAllBySendOrderByCreatedAsc(boolean isSend);
 }

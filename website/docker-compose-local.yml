@@ -13,7 +13,6 @@ services:
       - 19092:19092
     networks:
       - public-website
-      -
   elasticsearch-website:
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
@@ -28,4 +27,4 @@ volumes:
     driver: local
 
 networks:
-  public-erknm:
+  public-website:

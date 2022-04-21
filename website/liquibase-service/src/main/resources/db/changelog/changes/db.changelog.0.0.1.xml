@@ -179,4 +179,220 @@
         </sql>
     </changeSet>
 
+    <changeSet author="Ruslan Pashin" id="20220420-1">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="loan" tableName="loan_application"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="loan" tableName="loan_application">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="loan_id_pk"/>
+            </column>
+            <column name="guid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="industry" type="VARCHAR(128)">
+            </column>
+            <column name="credit_limit" type="BIGINT"/>
+            <column name="amount_of_lawsuits" type="BIGINT"/>
+            <column name="amount_of_proceedings" type="BIGINT"/>
+            <column name="amount_of_workers" type="BIGINT"/>
+            <column name="capital" type="BIGINT"/>
+            <column name="revenue" type="BIGINT"/>
+            <column name="net_profit" type="BIGINT"/>
+            <column name="company_size_type_id" type="BIGINT"/>
+            <column name="client_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet author="Ruslan Pashin" id="20220420-2">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="catalogs" tableName="company_size_type"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="catalogs" tableName="company_size_type">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="company_size_id_pk"/>
+            </column>
+            <column name="code" type="VARCHAR(32)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="VARCHAR(64)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220420-3">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="loan" tableName="loan_application" columnName="created_at"/>
+            </not>
+        </preConditions>
+        <addColumn schemaName="loan" tableName="loan_application">
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220420-4">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="catalogs" tableName="bank"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="catalogs" tableName="bank">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="bank_id_pk"/>
+            </column>
+            <column name="guid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220420-5">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="users" tableName="user" columnName="bank_id"/>
+            </not>
+            <not>
+                <columnExists schemaName="users" tableName="user" columnName="position"/>
+            </not>
+        </preConditions>
+        <addColumn schemaName="users" tableName="user">
+            <column name="bank_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn schemaName="users" tableName="user">
+            <column name="position" type="VARCHAR(32)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220420-6">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from catalogs.bank</sqlCheck>
+        </preConditions>
+        <loadData file="db/changelog/data/banks.csv" schemaName="catalogs" separator=";"
+                  quotchar="" tableName="bank"/>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220420-7">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="system" tableName="news"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="system" tableName="news">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="news_id_pk"/>
+            </column>
+            <column name="title" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="VARCHAR(1024)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220420-8">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="system" tableName="news" columnName="deleted"/>
+            </not>
+        </preConditions>
+        <addColumn schemaName="system" tableName="news">
+            <column name="deleted" type="BOOLEAN" defaultValue="false"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220420-9">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="loan" tableName="loan_application" columnName="ml_status"/>
+            </not>
+        </preConditions>
+        <addColumn schemaName="loan" tableName="loan_application">
+            <column name="ml_status" type="VARCHAR(32)" defaultValue="NEW"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220420-10">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="system" tableName="news" columnName="created_at"/>
+            </not>
+        </preConditions>
+        <addColumn schemaName="system" tableName="news">
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220420-11">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="loan" tableName="loan_application" columnName="company_name"/>
+            </not>
+            <not>
+                <columnExists schemaName="loan" tableName="loan_application" columnName="company_inn"/>
+            </not>
+            <not>
+                <columnExists schemaName="loan" tableName="loan_application" columnName="company_ogrn"/>
+            </not>
+        </preConditions>
+        <addColumn schemaName="loan" tableName="loan_application">
+            <column name="company_name" type="VARCHAR(128)"/>
+        </addColumn>
+        <addColumn schemaName="loan" tableName="loan_application">
+            <column name="company_inn" type="VARCHAR(12)"/>
+        </addColumn>
+        <addColumn schemaName="loan" tableName="loan_application">
+            <column name="company_ogrn" type="VARCHAR(15)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220421-1">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="catalogs" tableName="industry"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="catalogs" tableName="industry">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="industry_id_pk"/>
+            </column>
+            <column name="code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220421-2">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="loan" tableName="loan_application" columnName="industry_id"/>
+            </not>
+            <columnExists schemaName="loan" tableName="loan_application" columnName="industry"/>
+        </preConditions>
+        <addColumn schemaName="loan" tableName="loan_application">
+            <column name="industry_id" type="BIGINT"/>
+        </addColumn>
+        <dropColumn tableName="loan_application" schemaName="loan" columnName="industry"/>
+    </changeSet>
+
 </databaseChangeLog>

@@ -1,7 +1,6 @@
 package ru.itis.pashin.websiteservice.model.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import ru.itis.pashin.website.common.model.user.dto.UserDTO;
 import ru.itis.pashin.websiteservice.model.dto.SignUpDTO;
 

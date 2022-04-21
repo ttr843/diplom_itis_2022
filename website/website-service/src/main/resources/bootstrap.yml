@@ -2,7 +2,7 @@ spring:
   application:
     name: website-service
   profiles:
-    include: db, feign, web, security
+    include: db, feign, web, security, kafka
   cloud:
     config:
       fail-fast: true

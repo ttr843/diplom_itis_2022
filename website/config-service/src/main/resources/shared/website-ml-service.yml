@@ -1,0 +1,19 @@
+logging:
+  file:
+    name: logs/website.log
+
+server:
+  port: 9104
+
+spring:
+  datasource:
+    hikari:
+      maximum-pool-size: 20
+  jpa:
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+  kafka:
+    client-id: website-ml-service
+    consumer:
+      group-id: website-ml-consumer-group

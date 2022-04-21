@@ -1,6 +1,6 @@
 logging:
   file:
-    name: logs/erknm/mail-integration.log
+    name: logs/mail-integration.log
 
 server:
   port: 9103

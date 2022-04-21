@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.itis.pashin.website.common.model.exception.exception.ServiceException;
 import ru.itis.pashin.websiteservice.model.dto.SignUpDTO;
 import ru.itis.pashin.websiteservice.service.AuthService;
 
@@ -27,7 +28,7 @@ public class AuthController {
         if (Objects.nonNull(authentication)) {
             return "redirect:/website/main";
         } else {
-            return "signIn";
+            return "sign_in";
         }
     }
 
@@ -37,7 +38,7 @@ public class AuthController {
             return "redirect:/website/main";
         } else {
             model.addAttribute("signUpDTO", null);
-            return "signUp";
+            return "sign_up";
         }
     }
 
@@ -45,10 +46,10 @@ public class AuthController {
     public String signUp(SignUpDTO signUpDTO, Model model) {
         try {
             authService.signUp(signUpDTO);
-            return "preConfirmation";
-        } catch (Exception e) {
-            model.addAttribute("errorSignUp", e.getMessage());
-            return "signUp";
+            return "pre_confirmation";
+        } catch (ServiceException e) {
+            model.addAttribute("error", e.getServiceErrorCode());
+            return "error_page";
         }
     }
 
