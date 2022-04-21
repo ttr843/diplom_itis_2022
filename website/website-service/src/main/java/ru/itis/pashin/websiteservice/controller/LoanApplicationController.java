@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.itis.pashin.website.common.model.exception.exception.ServiceException;
@@ -16,6 +17,7 @@ import ru.itis.pashin.websiteservice.service.LoanService;
 import ru.itis.pashin.websiteservice.service.UserService;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
@@ -51,6 +53,17 @@ public class LoanApplicationController {
     public String createLoan(CreateLoanApplicationDTO createLoanApplicationDTO, Authentication authentication, Model model) {
         try {
             loanService.createLoan(createLoanApplicationDTO, userService.getCurrentUser(authentication));
+            return "redirect:/website/loan";
+        } catch (ServiceException e) {
+            model.addAttribute(ERROR_PARAM_TITLE, e.getServiceErrorCode());
+            return ERROR_PAGE_TITLE;
+        }
+    }
+
+    @PostMapping("/approve/{guid}")
+    public String approveLoan(@PathVariable("guid") UUID guid, Authentication authentication, Model model) {
+        try {
+            loanService.approveLoan(guid, userService.getCurrentUser(authentication));
             return "redirect:/website/loan";
         } catch (ServiceException e) {
             model.addAttribute(ERROR_PARAM_TITLE, e.getServiceErrorCode());

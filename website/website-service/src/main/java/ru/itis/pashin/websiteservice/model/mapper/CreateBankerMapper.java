@@ -22,7 +22,7 @@ public interface CreateBankerMapper {
                 .street(createBankerDTO.getStreet())
                 .house(createBankerDTO.getHouse())
                 .email(createBankerDTO.getEmail())
-
+                .position(createBankerDTO.getPosition())
                 .build();
     }
 }

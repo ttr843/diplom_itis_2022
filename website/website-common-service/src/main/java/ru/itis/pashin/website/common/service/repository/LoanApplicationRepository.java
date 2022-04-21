@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.itis.pashin.website.common.model.loan.entity.LoanApplication;
 import ru.itis.pashin.website.common.model.loan.enumeration.MlStatus;
 
+import java.util.Optional;
+import java.util.UUID;
+
 /**
  * @author <a href="mailto:ruslan.pashin@waveaccess.ru">Ruslan Pashin</a>
  */
@@ -19,6 +22,8 @@ public interface LoanApplicationRepository extends JpaRepository<LoanApplication
     Iterable<LoanApplication> findAllByClientIdOrderByCreatedAt(Long clientId);
 
     Iterable<LoanApplication> findAllByMlStatusOrderByCreatedAt(MlStatus mlStatus);
+
+    Optional<LoanApplication> findByGuid(UUID guid);
 
     @Modifying
     @Transactional

@@ -21,6 +21,8 @@ import ru.itis.pashin.websiteservice.producer.LoanKafkaProducer;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -84,5 +86,25 @@ public class LoanService {
         return loanApplicationRepository.findAll().stream()
                 .map(loanApplicationMapper::entityToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public void approveLoan(UUID guid, UserDTO currentUser) {
+        try {
+            LoanApplication loanApplication = loanApplicationRepository.findByGuid(guid)
+                    .orElseThrow(() -> new ServiceException(ERROR_CODE_0011));
+            LoanApplicationDTO loanApplicationDTO = loanApplicationMapper.entityToDTO(loanApplication);
+            if (!Objects.equals(loanApplicationDTO.getMlStatus(), MlStatus.DONE_APPROVED)) {
+                log.error("заявка еще не одобрена системой, идентификатор заявки {}", loanApplicationDTO.getId());
+                throw new ServiceException(ERROR_CODE_0013);
+            }
+            loanApplicationDTO.setApprovedByBank(true);
+            loanApplicationDTO.setApprovedByBankAt(LocalDateTime.now().format(DateFormatConstants.DATE_TIME_FORMAT));
+            loanApplicationDTO.setBanker(currentUser);
+            loanApplicationMapper.updateLoan(loanApplication, loanApplicationDTO);
+            loanApplicationRepository.save(loanApplication);
+        } catch (Exception e) {
+            log.error("ошибка при одобрении заявки:  {}", e.getMessage());
+            throw new ServiceException(ERROR_CODE_0012);
+        }
     }
 }

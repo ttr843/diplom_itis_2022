@@ -87,6 +87,20 @@ public class LoanApplication implements Serializable {
     @FieldDescription(description = "Размер компании")
     private CompanySizeType companySizeType;
 
+    @FieldDescription(description = "Одобрено банком")
+    private boolean approvedByBank;
+
+    @FieldDescription(description = "Время, когда была одобрена заявка")
+    private LocalDateTime approvedByBankAt;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "banker_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @FieldDescription(description = "Сотрудник банка")
+    private User banker;
+
     @NotNull
     @ManyToOne
     @JoinColumn(name = "client_id")

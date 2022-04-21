@@ -16,6 +16,10 @@
     <button type="button">Перейти к пользователям</button>
 </a>
 <p></p>
+<a href="/website/admin/all-loans" methods="get">
+    <button type="button">Перейти ко всем заявкам</button>
+</a>
+<p></p>
 <a href="/website/main" methods="get">
     <button type="button">Главная</button>
 </a>

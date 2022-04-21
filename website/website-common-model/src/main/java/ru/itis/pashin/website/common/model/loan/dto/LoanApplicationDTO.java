@@ -6,7 +6,11 @@ import ru.itis.pashin.website.common.model.catalogs.dto.CompanySizeTypeDTO;
 import ru.itis.pashin.website.common.model.catalogs.dto.IndustryDTO;
 import ru.itis.pashin.website.common.model.loan.enumeration.MlStatus;
 import ru.itis.pashin.website.common.model.user.dto.UserDTO;
+import ru.itis.pashin.website.common.model.user.entity.User;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -66,4 +70,12 @@ public class LoanApplicationDTO {
     private CompanySizeTypeDTO companySizeType;
 
     private UserDTO client;
+
+    @FieldDescription(description = "Одобрено банком")
+    private boolean approvedByBank;
+
+    @FieldDescription(description = "Время, когда была одобрена заявка")
+    private String approvedByBankAt;
+
+    private UserDTO banker;
 }

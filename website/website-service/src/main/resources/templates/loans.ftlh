@@ -34,66 +34,172 @@
     <#if role??>
         <#assign code = role.getCode()>
         <#if code == "USER">
-            <h3><b>Мои заявки</b></h3>
+            <#if loans??>
+                <table>
+                    <caption><h3>Мои заявки</h3></caption>
+                    <tr>
+                        <th>Номер заявки</th>
+                        <th>Название компании</th>
+                        <th>ИНН компании</th>
+                        <th>ОГРН компании</th>
+                        <th>Размер компании</th>
+                        <th>Вид дейтельности, отрасль</th>
+                        <th>Кредитный лимит, RUB</th>
+                        <th>Сумма незавершенных исков в роли ответчика, RUB</th>
+                        <th>Сумма исполнительных производств, RUB</th>
+                        <th>Среднесписочная численность работников</th>
+                        <th>Уставный капитал, RUB</th>
+                        <th>Выручка, RUB</th>
+                        <th>Чистая прибыль (убыток), RUB</th>
+                        <th>Создана</th>
+                        <th>Статус обработки</th>
+                        <th>Одобрена банком</th>
+                        <th>Время одобрения</th>
+                        <th>Кем Одобрена</th>
+                        <th>Должность сотрудника</th>
+                        <th>Банк</th>
+                    </tr>
+                    <#list loans as loan>
+                        <tr>
+                            <#assign mlStatusId = loan.getMlStatus().getId()>
+                            <td>${loan.getId()}</td>
+                            <td>${loan.getCompanyName()}</td>
+                            <td>${loan.getCompanyInn()}</td>
+                            <td>${loan.getCompanyOgrn()}</td>
+                            <td>${loan.getCompanySizeType().getName()}</td>
+                            <td>${loan.getIndustry().getName()}</td>
+                            <td>${loan.getCreditLimit()}</td>
+                            <td>${loan.getAmountOfLawsuits()}</td>
+                            <td>${loan.getAmountOfProceedings()}</td>
+                            <td>${loan.getAmountOfWorkers()}</td>
+                            <td>${loan.getCapital()}</td>
+                            <td>${loan.getRevenue()}</td>
+                            <td>${loan.getNetProfit()}</td>
+                            <td>${loan.getCreatedAt()}</td>
+                            <#if mlStatusId == 1>
+                                <td style="color:black">${loan.getMlStatus().getName()}</td>
+                            <#elseif mlStatusId == 2>
+                                <td style="color:blue">${loan.getMlStatus().getName()}
+                            <#elseif mlStatusId == 3>
+                                <td style="color:red">${loan.getMlStatus().getName()}</td>
+                            <#elseif mlStatusId == 4>
+                                <td style="color:orange">${loan.getMlStatus().getName()}</td>
+                            <#elseif mlStatusId == 5>
+                                <td style="color:green">${loan.getMlStatus().getName()}</td>
+                            </#if>
+                            <#assign approvedStatus = loan.isApprovedByBank()>
+                            <#if approvedStatus>
+                                <td style="color:green">Да</td>
+                            <#else>
+                                <td style="color:blue">В ожидании</td>
+                            </#if>
+                            <#if loan.getApprovedByBankAt()??>
+                                <td>${loan.getApprovedByBankAt()}</td>
+                                <td>${loan.getBanker().getFirstName() + " "} ${loan.getBanker().getMiddleName() + " "} ${loan.getBanker().getLastName() + " "} </td>
+                                <td>${loan.getBanker().getPosition()}</td>
+                                <td>${loan.getBanker().getBank().getName()}</td>
+                            <#else>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </#if>
+                        </tr>
+                    </#list>
+                </table>
+            </#if>
         <#else>
-            <h3><b>Готовые к утверждению заявки</b></h3>
+            <#if loans??>
+                <table>
+                    <caption><h3>Готовые к утверждению заявки</h3></caption>
+                    <tr>
+                        <th>Номер заявки</th>
+                        <th>Название компании</th>
+                        <th>ИНН компании</th>
+                        <th>ОГРН компании</th>
+                        <th>Размер компании</th>
+                        <th>Вид дейтельности, отрасль</th>
+                        <th>Кредитный лимит, RUB</th>
+                        <th>Сумма незавершенных исков в роли ответчика, RUB</th>
+                        <th>Сумма исполнительных производств, RUB</th>
+                        <th>Среднесписочная численность работников</th>
+                        <th>Уставный капитал, RUB</th>
+                        <th>Выручка, RUB</th>
+                        <th>Чистая прибыль (убыток), RUB</th>
+                        <th>Создана</th>
+                        <th>Статус обработки</th>
+                        <th>Кем создана</th>
+                        <th>Одобрена банком</th>
+                        <th>Время одобрения</th>
+                        <th>Кем Одобрена</th>
+                        <th>Должность сотрудника</th>
+                        <th>Банк</th>
+                        <th>Действие</th>
+                    </tr>
+                    <#list loans as loan>
+                        <tr>
+                            <#assign mlStatusId = loan.getMlStatus().getId()>
+                            <td>${loan.getId()}</td>
+                            <td>${loan.getCompanyName()}</td>
+                            <td>${loan.getCompanyInn()}</td>
+                            <td>${loan.getCompanyOgrn()}</td>
+                            <td>${loan.getCompanySizeType().getName()}</td>
+                            <td>${loan.getIndustry().getName()}</td>
+                            <td>${loan.getCreditLimit()}</td>
+                            <td>${loan.getAmountOfLawsuits()}</td>
+                            <td>${loan.getAmountOfProceedings()}</td>
+                            <td>${loan.getAmountOfWorkers()}</td>
+                            <td>${loan.getCapital()}</td>
+                            <td>${loan.getRevenue()}</td>
+                            <td>${loan.getNetProfit()}</td>
+                            <td>${loan.getCreatedAt()}</td>
+                            <#if mlStatusId == 1>
+                                <td style="color:black">${loan.getMlStatus().getName()}</td>
+                            <#elseif mlStatusId == 2>
+                                <td style="color:blue">${loan.getMlStatus().getName()}
+                            <#elseif mlStatusId == 3>
+                                <td style="color:red">${loan.getMlStatus().getName()}</td>
+                            <#elseif mlStatusId == 4>
+                                <td style="color:orange">${loan.getMlStatus().getName()}</td>
+                            <#elseif mlStatusId == 5>
+                                <td style="color:green">${loan.getMlStatus().getName()}</td>
+                            </#if>
+                            <td>${loan.getClient().getFirstName() + " "} ${loan.getClient().getMiddleName() + " "} ${loan.getClient().getLastName()}</td>
+                            <#assign approvedStatus = loan.isApprovedByBank()>
+                            <#if approvedStatus>
+                                <td style="color:green">Да</td>
+                            <#else>
+                                <td style="color:blue">В ожидании</td>
+                            </#if>
+                            <#if loan.getApprovedByBankAt()??>
+                                <td>${loan.getApprovedByBankAt()}</td>
+                                <td>${loan.getBanker().getFirstName() + " "} ${loan.getBanker().getMiddleName() + " "} ${loan.getBanker().getLastName() + " "} </td>
+                                <td>${loan.getBanker().getPosition()}</td>
+                                <td>${loan.getBanker().getBank().getName()}</td>
+                            <#else>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </#if>
+                            <#if approvedStatus>
+                                <td><b>Нет действий</b></td>
+                            <#else>
+                                <td>
+                                    <form action="/website/loan/approve/${loan.getGuid()}" method="post" id="approve"></form>
+                                    <a onclick="document.getElementById('approve').submit();">
+                                        <button type="button">
+                                            <b>Согласовать</b>
+                                        </button>
+                                    </a>
+                                </td>
+                            </#if>
+                        </tr>
+                    </#list>
+                </table>
+            </#if>
         </#if>
     </#if>
-</#if>
-<#if loans??>
-    <table>
-        <caption><h3>Заявки</h3></caption>
-        <tr>
-            <th>Номер заявки</th>
-            <th>Название компании</th>
-            <th>ИНН компании</th>
-            <th>ОГРН компании</th>
-            <th>Размер компании</th>
-            <th>Вид дейтельности, отрасль</th>
-            <th>Кредитный лимит, RUB</th>
-            <th>Сумма незавершенных исков в роли ответчика, RUB</th>
-            <th>Сумма исполнительных производств, RUB</th>
-            <th>Среднесписочная численность работников</th>
-            <th>Уставный капитал, RUB</th>
-            <th>Выручка, RUB</th>
-            <th>Чистая прибыль (убыток), RUB</th>
-            <th>Создана</th>
-            <th>Статус обработки</th>
-            <th>Кем создана</th>
-        </tr>
-        <#list loans as loan>
-            <tr>
-                <#assign mlStatusId = loan.getMlStatus().getId()>
-                <td>${loan.getId()}</td>
-                <td>${loan.getCompanyName()}</td>
-                <td>${loan.getCompanyInn()}</td>
-                <td>${loan.getCompanyOgrn()}</td>
-                <td>${loan.getCompanySizeType().getName()}</td>
-                <td>${loan.getIndustry().getName()}</td>
-                <td>${loan.getCreditLimit()}</td>
-                <td>${loan.getAmountOfLawsuits()}</td>
-                <td>${loan.getAmountOfProceedings()}</td>
-                <td>${loan.getAmountOfWorkers()}</td>
-                <td>${loan.getCapital()}</td>
-                <td>${loan.getRevenue()}</td>
-                <td>${loan.getNetProfit()}</td>
-                <td>${loan.getCreatedAt()}</td>
-                <#if mlStatusId == 1>
-                        <td style="color:white">${loan.getMlStatus().getName()}</td>
-                <#elseif mlStatusId == 2>
-                        <td style="color:blue">${loan.getMlStatus().getName()}
-                <#elseif mlStatusId == 3>
-                        <td style="color:red">${loan.getMlStatus().getName()}</td>
-                <#elseif mlStatusId == 4>
-                        <td style="color:yellow">${loan.getMlStatus().getName()}</td>
-                <#elseif mlStatusId == 5>
-                        <td style="color:green">${loan.getMlStatus().getName()}</td>
-
-                </#if>
-                <td>${loan.getClient().getFirstName() + " "} ${loan.getClient().getMiddleName() + " "} ${loan.getClient().getLastName()}</td>
-            </tr>
-        </#list>
-    </table>
 </#if>
 </body>
 </html>
