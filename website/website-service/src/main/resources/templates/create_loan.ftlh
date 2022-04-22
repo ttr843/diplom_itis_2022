@@ -36,7 +36,7 @@
     </div>
     <p></p>
     <div>
-        <select name="industryId">
+        <select name="industryId" size="3" style="width:900px;">
             <#list industries as industry>
                 <#if industry??>
                     <option selected value="${industry.getId()}"> ${industry.getName()} </option>
@@ -74,7 +74,7 @@
     </div>
     <p></p>
     <div>
-        <select name="companySizeTypeId">
+        <select name="companySizeTypeId" size="3" style="width:300px;">
             <#list companySizeTypes as companySizeType>
                 <#if companySizeType??>
                     <option selected value="${companySizeType.getId()}"> ${companySizeType.getName()} </option>

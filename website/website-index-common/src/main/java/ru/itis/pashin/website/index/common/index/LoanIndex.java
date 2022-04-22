@@ -80,6 +80,9 @@ public class LoanIndex {
     private String bankerPosition;
 
     @Field(type = FieldType.Keyword)
+    private String bankerEmail;
+
+    @Field(type = FieldType.Keyword)
     private String bankName;
 
     @Field(type = FieldType.Keyword)

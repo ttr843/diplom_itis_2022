@@ -22,7 +22,7 @@ public class CreateLoanApplicationDTO {
     private String companyOgrn;
 
     @FieldDescription(description = "Вид дейтельности, отрасль")
-    private Long industryId;
+    private String industryId;
 
     @FieldDescription(description = "Кредитный лимит, RUB")
     private Long creditLimit;

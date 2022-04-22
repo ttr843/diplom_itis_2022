@@ -2,6 +2,7 @@ package ru.itis.pashin.websiteservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.itis.pashin.website.common.model.Util.DateFormatConstants;
 import ru.itis.pashin.website.common.model.catalogs.mapper.CompanySizeTypeMapper;
@@ -92,7 +93,7 @@ public class LoanService {
         loanApplicationDTO.setClient(currentUser);
         loanApplicationDTO.setMlStatus(MlStatus.NEW);
         loanApplicationDTO.setIndustry(industryMapper.entityToDTO(
-                industryRepository.findById(createLoanApplicationDTO.getIndustryId())
+                industryRepository.findById(Long.valueOf(createLoanApplicationDTO.getIndustryId().replace("\u00A0", StringUtils.EMPTY)))
                         .orElseThrow(() -> new ServiceException(ERROR_CODE_0009))));
         loanApplicationDTO.setCompanySizeType(companySizeTypeMapper.entityToDTO(
                 companySizeTypeRepository.findById(createLoanApplicationDTO.getCompanySizeTypeId())

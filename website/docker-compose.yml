@@ -103,9 +103,9 @@ services:
       DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"
 
   index-write-service:
-    build: index-write-service
+    build: index-write
     restart: unless-stopped
-    container_name: index-write-service
+    container_name: index-write
     depends_on:
       - config-service
     environment:
@@ -115,9 +115,9 @@ services:
       DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"
 
   index-sync-service:
-    build: index-sync-service
+    build: index-sync
     restart: unless-stopped
-    container_name: index-sync-service
+    container_name: index-sync
     depends_on:
       - config-service
     environment:
@@ -127,9 +127,9 @@ services:
       DEF_JAVA_OPTIONS: "${DEF_JAVA_OPTIONS}"
 
   index-read-service:
-    build: index-read-service
+    build: index-read
     restart: unless-stopped
-    container_name: index-read-service
+    container_name: index-read
     depends_on:
       - config-service
     environment:

@@ -53,7 +53,7 @@ public class LoanApplicationDTO {
     private Long revenue;
 
     @FieldDescription(description = "Чистая прибыль (убыток), RUB")
-    private Long netProfit;
+        private Long netProfit;
 
     private String createdAt;
 

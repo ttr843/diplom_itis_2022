@@ -58,6 +58,7 @@
                         <th>Кем Одобрена</th>
                         <th>Должность сотрудника</th>
                         <th>Банк</th>
+                        <th>Действия</th>
                     </tr>
                     <#list loans as loan>
                         <tr>
@@ -98,7 +99,11 @@
                                 <td>${loan.getBankerFullName()}</td>
                                 <td>${loan.getBankerPosition()}</td>
                                 <td>${loan.getBankName()}</td>
+                                <td><a href="mailto:${loan.getBankerEmail()}">
+                                        <button type="button">Связаться с сотрудником</button>
+                                    </a></td>
                             <#else>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

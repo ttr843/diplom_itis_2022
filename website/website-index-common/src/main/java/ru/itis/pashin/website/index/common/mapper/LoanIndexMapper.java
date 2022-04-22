@@ -23,6 +23,7 @@ public interface LoanIndexMapper {
     @Mapping(target = "bankerPosition", source = "banker.position")
     @Mapping(target = "bankerFullName", expression = "java(getFullNameByUser(dto.getBanker()))")
     @Mapping(target = "bankerId", source = "banker.id")
+    @Mapping(target = "bankerEmail", source = "banker.email")
     @Mapping(target = "bankName", source = "banker.bank.name")
     @Mapping(target = "bankCode", source = "banker.bank.code")
     LoanIndex dtoToIndex(LoanApplicationDTO dto);

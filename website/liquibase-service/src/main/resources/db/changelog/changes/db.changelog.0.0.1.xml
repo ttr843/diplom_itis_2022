@@ -434,5 +434,41 @@
         </addColumn>
     </changeSet>
 
+    <changeSet author="Ruslan Pashin" id="20220422-1">
+        <preConditions onFail="MARK_RAN">
+            <columnExists schemaName="catalogs" tableName="industry" columnName="name"/>
+        </preConditions>
+        <dropColumn schemaName="catalogs" tableName="industry" columnName="name"/>
+        <addColumn schemaName="catalogs" tableName="industry">
+            <column name="name" type="VARCHAR(512)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220422-2">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from catalogs.industry</sqlCheck>
+        </preConditions>
+        <loadData file="db/changelog/data/industryTypes.csv" schemaName="catalogs" tableName="industry"
+                  separator="," quotchar="" />
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220422-3">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from catalogs.company_size_type</sqlCheck>
+        </preConditions>
+        <loadData file="db/changelog/data/companyTypes.csv" schemaName="catalogs" tableName="company_size_type"
+                  separator=";" quotchar="" />
+    </changeSet>
+
+    <changeSet author="Ruslan Pashin" id="20220422-4">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1554">select count(*) from catalogs.industry</sqlCheck>
+        </preConditions>
+        <loadData file="db/changelog/data/industryTypes_additional.csv" schemaName="catalogs" tableName="industry"
+                  separator=";" quotchar="" />
+    </changeSet>
+
 
 </databaseChangeLog>

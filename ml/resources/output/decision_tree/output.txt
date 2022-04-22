@@ -1,0 +1,7 @@
+accuracy score :  1.0
+f1 score :  1.0
+precision score :  1.0
+recall score :  1.0
+Confusion matrix, without normalization
+[[ 2014     0]
+ [    0 40569]]
