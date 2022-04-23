@@ -36,6 +36,6 @@ np.set_printoptions(precision=2)
 
 # Строим ненормализованную матрицу ошибок
 util.plot_confusion_matrix(cnf_matrix, classes=["result"],
-                           path_save_file=
-                           "resources/output/logistic_regression/Confusion_matrix_Logistic_Regression.png",
+                           path_save_file="resources/output/logistic_regression/Confusion_matrix_Logistic_Regression"
+                                          ".png",
                            title='Confusion matrix - Logistic Regression')

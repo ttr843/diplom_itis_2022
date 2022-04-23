@@ -1,7 +1,6 @@
 import json
 import pickle
 
-import numpy
 import pandas as pd
 from flask import Flask, request
 
