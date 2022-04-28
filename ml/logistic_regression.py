@@ -66,7 +66,11 @@ print(logistic_regression.coef_)
 # Прогнозирование вывода тестовых случаев с использованием алгоритма, созданного выше
 y_predict = logistic_regression.predict(x_test)
 
-print("")
+print("---START---")
+print(y_test)
+print("---HALF---")
+print(y_predict)
+print("---END---")
 a1 = accuracy_score(y_test, y_predict)
 f1 = f1_score(y_test, y_predict, average="macro")
 p1 = precision_score(y_test, y_predict, average="macro")
@@ -77,10 +81,14 @@ print("precision score : ", p1)
 print("recall score : ", r1)
 
 cnf_matrix = confusion_matrix(y_test, y_predict)
+
+tn, fp, fn, tp = cnf_matrix.ravel()
+print(tn, fp, fn, tp )
+
 np.set_printoptions(precision=2)
 
 # Строим ненормализованную матрицу ошибок
-plot_confusion_matrix(cnf_matrix, classes=["result"],
+plot_confusion_matrix(cnf_matrix, classes=["negative"],
                       path_save_file="resources/output/logistic_regression/Confusion_matrix_Logistic_Regression"
                                      ".png",
                       title='Confusion matrix - Logistic Regression')
