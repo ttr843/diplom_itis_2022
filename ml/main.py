@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/website/ml/predict')
 def search_something():
     loaded_model = pickle.load(
-        open("C:/projects/diplom/diplom_itis_2022/ml/resources/output/logistic_regression/model.sav", 'rb'))
+        open("C:/projects/diplom/diplom_itis_2022/ml/resources/output/decision_tree/model.sav", 'rb'))
     data = [[request.args['industryId'], request.args['creditLimit'], request.args['amountOfLawsuits'],
              request.args['amountOfProceedings'],
              request.args['companySizeTypeId'], request.args['amountOfWorkers'], request.args['capital'],

@@ -1,10 +1,11 @@
 import itertools
 import pickle
 
+import graphviz
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
+from sklearn import tree
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
@@ -46,25 +47,22 @@ def plot_confusion_matrix(cm, classes,
 
 
 df = pd.read_csv("C:/projects/diplom/diplom_itis_2022/ml/resources/prepared_data.csv")
-x_basic = df.drop(columns=["result", "companyName", 'id'])
+x_basic = df.drop(columns=["result", "companyName"])
 y = df["result"]
 
 # Разделение данных на тестовые и обучающие наборы
 x_train, x_test, y_train, y_test = train_test_split(x_basic, y, test_size=.33, random_state=1)
-logistic_regression = LogisticRegression()
 
-# Обучение базовой модели логистической регрессии с помощью обучающего набора
-logistic_regression.fit(x_train, y_train)
+decision_tree_classifier = tree.DecisionTreeClassifier()
+decision_tree_classifier.max_depth = 100
 
-pickle.dump(logistic_regression, open("resources/output/logistic_regression/model.sav", 'wb'))
+# Обучение базовой модели дерева решений с помощью обучающего набора
+decision_tree_classifier.fit(x_train, y_train)
 
-print("intercept ")
-print(logistic_regression.intercept_)
-print("coefficients ")
-print(logistic_regression.coef_)
+pickle.dump(decision_tree_classifier, open("resources/output/decision_tree/model.sav", 'wb'))
 
-# Прогнозирование вывода тестовых случаев с использованием алгоритма, созданного выше
-y_predict = logistic_regression.predict(x_test)
+# Прогнозирование вывода тестовых случаев с помощью алгоритма, созданного выше
+y_predict = decision_tree_classifier.predict(x_test)
 
 print("---START---")
 print(y_test)
@@ -81,14 +79,14 @@ print("precision score : ", p1)
 print("recall score : ", r1)
 
 cnf_matrix = confusion_matrix(y_test, y_predict)
-
 tn, fp, fn, tp = cnf_matrix.ravel()
 print(tn, fp, fn, tp)
 
 np.set_printoptions(precision=2)
 
+
 # Строим ненормализованную матрицу ошибок
-plot_confusion_matrix(cnf_matrix, classes=["negative"],
-                      path_save_file="resources/output/logistic_regression/Confusion_matrix_Logistic_Regression"
-                                     ".png",
-                      title='Confusion matrix - Logistic Regression')
+plot_confusion_matrix(cnf_matrix, classes=["result"],
+                       path_save_file=
+                       "resources/output/decision_tree/Confusion_matrix_Decision_Tree_classifier.png",
+                       title='Confusion matrix - Decision Tree classifier')
