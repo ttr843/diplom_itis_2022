@@ -66,11 +66,12 @@ public class LoanService {
         }
     }
 
-    public void saveLoan(CreateLoanApplicationDTO createLoanApplicationDTO, UserDTO currentUser) {
+    public LoanApplication saveLoan(CreateLoanApplicationDTO createLoanApplicationDTO, UserDTO currentUser) {
         try {
             LoanApplication createdLoan = createLoan(createLoanApplicationDTO, currentUser);
             LoanApplicationDTO createdLoanDTO = loanApplicationMapper.entityToDTO(createdLoan);
             afterLoanSaveOperation(createdLoanDTO, Arrays.asList(KafkaTopicConstant.LOAN_REQUEST_TOPIC, KafkaTopicConstant.LOAN_INDEX_WRITE_TOPIC));
+            return createdLoan;
         } catch (Exception e) {
             log.error("ошибка при создании заявки:  {}", e.getMessage());
             throw new ServiceException(ERROR_CODE_0008);
@@ -78,10 +79,11 @@ public class LoanService {
 
     }
 
-    public void approveByGuid(UUID guid, UserDTO currentUser) {
+    public LoanApplicationDTO approveByGuid(UUID guid, UserDTO currentUser) {
         try {
             LoanApplicationDTO approvedLoanApplicationDTO = approveLoan(guid, currentUser);
             afterLoanSaveOperation(approvedLoanApplicationDTO, Collections.singletonList(KafkaTopicConstant.LOAN_INDEX_WRITE_TOPIC));
+            return approvedLoanApplicationDTO;
         } catch (Exception e) {
             log.error("ошибка при одобрении заявки:  {}", e.getMessage());
             throw new ServiceException(ERROR_CODE_0012);

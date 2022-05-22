@@ -21,7 +21,7 @@
 </a>
 <#if loans??>
     <table>
-        <caption><h3>Мои заявки</h3></caption>
+        <caption><h3>Все заявки</h3></caption>
         <tr>
             <th>Номер заявки</th>
             <th>Название компании</th>
