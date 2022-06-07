@@ -116,7 +116,7 @@
         <#else>
             <#if loans??>
                 <table>
-                    <caption><h3>Готовые к утверждению заявки</h3></caption>
+                    <caption><h3>Доступные заявки</h3></caption>
                     <tr>
                         <th>Номер заявки</th>
                         <th>Название компании</th>

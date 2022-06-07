@@ -1,7 +1,7 @@
-accuracy score :  1.0
-f1 score :  1.0
-precision score :  1.0
-recall score :  1.0
+accuracy score :  0.9145668459244299
+f1 score :  0.559331161235854
+precision score :  0.5556008216046733
+recall score :  0.563978461499372
 
 tn, fp, fn, tp
-2014 0 0 40569
+356,1658,1980,38589

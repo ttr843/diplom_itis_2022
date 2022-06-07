@@ -18,4 +18,4 @@ spring:
     consumer:
       group-id: website-ml-consumer-group
 
-ml-predict-service-url: http://${IP_ADDRESS:127.0.0.1}:9108
+ml-predict-service-url: http://${IP_ADDRESS:127.0.0.1}:5000

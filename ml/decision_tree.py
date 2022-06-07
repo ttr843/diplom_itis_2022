@@ -12,7 +12,7 @@ output_path = "resources/output/decision_tree/model.sav";
 matrix_output_path = "resources/output/decision_tree/Confusion_matrix_Decision_Tree_classifier.png"
 
 df = pd.read_csv(data_path)
-x_basic = df.drop(columns=["result", "companyName"])
+x_basic = df.drop(columns=["result", "companyName", 'id'])
 y = df["result"]
 
 # Разделение данных на тестовые и обучающие наборы
